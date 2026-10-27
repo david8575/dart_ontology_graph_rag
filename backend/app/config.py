@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     ollama_embed_model: str = "bge-m3"
 
     dart_api_key: SecretStr
+    
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
