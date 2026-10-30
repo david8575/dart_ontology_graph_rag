@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from neo4j import AsyncGraphDatabase
 
 from app.api import health
@@ -19,3 +20,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="DART ONTOLOGY GRAPH RAG", lifespan=lifespan)
 app.include_router(health.router)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["GET"]
+)
