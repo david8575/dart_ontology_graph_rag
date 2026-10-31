@@ -1,11 +1,11 @@
-from typing import Literal
+from typing import Annotated, Literal
 
 import httpx
-from fastapi import APIRouter, Request, Response
+from fastapi import APIRouter, Depends, Request, Response
 from neo4j import AsyncDriver
 from pydantic import BaseModel
 
-from app.config import get_settings
+from app.config import Settings, get_settings
 
 router = APIRouter(tags=["health"])
 
@@ -41,9 +41,11 @@ async def check_ollama(base_url: str) -> DependencyStatus:
 
 
 @router.get("/health")
-async def health(request: Request, response: Response) -> HealthResponse:
+async def health(
+    request: Request, response: Response, settings: Annotated[Settings, Depends(get_settings)]
+) -> HealthResponse:
     driver = request.app.state.neo4j_driver
-    base_url = get_settings().ollama_base_url
+    base_url = settings.ollama_base_url
 
     neo4j_check = await check_neo4j(driver=driver)
     ollama_check = await check_ollama(base_url=base_url)
