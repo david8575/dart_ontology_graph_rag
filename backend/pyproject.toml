@@ -9,3 +9,15 @@ dependencies = [
     "neo4j>=6.4.1",
     "pydantic-settings>=2.16.1",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.3",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

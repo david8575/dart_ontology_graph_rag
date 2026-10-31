@@ -7,6 +7,7 @@ from neo4j import AsyncGraphDatabase
 from app.api import health
 from app.config import get_settings
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
@@ -18,10 +19,7 @@ async def lifespan(app: FastAPI):
     yield
     await app.state.neo4j_driver.close()
 
+
 app = FastAPI(title="DART ONTOLOGY GRAPH RAG", lifespan=lifespan)
 app.include_router(health.router)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_methods=["GET"]
-)
+app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000"], allow_methods=["GET"])
