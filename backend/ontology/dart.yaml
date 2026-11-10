@@ -1,0 +1,44 @@
+version: 1
+
+nodes:
+  Company:
+    description: 회사. 공시 대상 기업과 주주, 출자 대상 회사를 포함한다.
+    key: [corp_code]
+    properties:
+      corp_code: { type: string, description: DART 고유번호 8자리 }
+      name: { type: string, description: 회사명 }
+      stock_code: { type: string, description: 종목코드 6자리. 비상장사는 없음 }
+  Person:
+    description: 인물, 임원과 개인 주주를 포함한다.
+    key: [name, birth_ym]
+    properties:
+      name: { type: string, description: 인물 이름 }
+      birth_ym: { type: string, description: 인물 출생년월 }
+
+relationships:
+  EXECUTIVE_OF:
+    description: 인물이 회사의 임원이다.
+    from: [Person]
+    to: [Company]
+    source: structured
+    properties:
+      position: { type: string, description: 직위 }
+      registered: { type: boolean, description: 등기 임원 여부 }
+      year: { type: integer, description: 기준 사업연도 }
+  SHAREHOLDER_OF:
+    description: 인물 또는 회사가 회사의 최대주주이거나 특수관계인이다.
+    from: [Person, Company]
+    to: [Company]
+    source: structured
+    properties:
+      share_ratio: { type: float, description: 지분율 }
+      year: { type: integer, description: 기준연도 }
+  INVESTS_IN:
+    description: 회사가 다른 회사에 출자했다.
+    from: [Company]
+    to: [Company]
+    source: structured
+    properties:
+      share_ratio: { type: float, description: 지분율 }
+      book_value: { type: integer, description: 장부가액 }
+      year: { type: integer, description: 기준 사업 연도 }
