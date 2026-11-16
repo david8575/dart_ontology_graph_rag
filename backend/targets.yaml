@@ -1,0 +1,16 @@
+companies:
+  - corp_code: "00126380"
+    name: 삼성전자
+    role: 메모리 반도체 제조
+  - corp_code: "00164779"
+    name: SK하이닉스
+    role: 메모리 반도체 제조
+  - corp_code: "00161383"
+    name: 한미반도체
+    role: 후공정 장비
+  - corp_code: "01135941"
+    name: 원익IPS
+    role: 전공정 장비
+  - corp_code: "00118804"
+    name: 동진쎄미켐
+    role: 소재
